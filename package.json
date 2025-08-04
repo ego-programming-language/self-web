@@ -1,0 +1,34 @@
+{
+  "name": "vultures",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@next/env": "^15.2.3",
+    "dotenv": "^16.5.0",
+    "gray-matter": "^4.0.3",
+    "jotai": "2.12.2",
+    "lucide-react": "^0.482.0",
+    "next": "^15.2.3",
+    "next-mdx-remote": "^5.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-pro-sidebar": "^1.1.0",
+    "react-useanimations": "^2.10.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
