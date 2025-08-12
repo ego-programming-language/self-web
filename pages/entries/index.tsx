@@ -7,7 +7,15 @@ import Link from 'next/link';
 export const MDXComponents = {
   //h1: (props: any) => <h1 style={{ color: 'tomato', fontSize: '3rem' }} {...props} />,
   p: (props: any) => <p style={{ fontWeight: "normal" }}{...props} />,
-  //code: (props: any) => <code style={{ background: '#eee', padding: '2px 4px' }} {...props} />,
+  code: (props: any) => <div className='flex flex-col w-full '>
+    <code
+      style={{
+        width: "100%",
+        background: '#eee',
+        padding: '10px 20px',
+        borderRadius: "4px",
+      }}>{props.children}</code>
+  </div>,
   //ul: (props: any) => <ul style={{ listStyle: 'square inside' }} {...props} />,
 };
 
