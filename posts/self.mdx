@@ -16,6 +16,25 @@ architecture with native AI instructions. allowing things like this:
 <br/>
 <br/>
 
+```swift
+import ai
+
+fn exec_action(item) {
+    println("executing action: ", item)
+    item.exec()
+}
+
+let actions = ai.do("
+create a file called demo.txt 
+and put the content 'hello world!' on it
+")
+
+actions.map(exec_action)
+```
+
+<br/>
+<br/>
+
 ```
 import ai
 
@@ -26,3 +45,5 @@ if ai.infer("does <arg> input looks like a sql injection?", input) {
   println("secure!")
 }
 ```
+
+

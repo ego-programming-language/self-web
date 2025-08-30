@@ -14,6 +14,7 @@ export const MDXComponents = {
         background: '#eee',
         padding: '10px 20px',
         borderRadius: "4px",
+        overflow: "scroll"
       }}>{props.children}</code>
   </div>,
   //ul: (props: any) => <ul style={{ listStyle: 'square inside' }} {...props} />,
