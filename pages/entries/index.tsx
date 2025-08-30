@@ -3,6 +3,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import { getPostSlugs, getPostSerialized } from '../../lib/mdx';
 import { sized, useSize } from '@/components/hooks/useSize';
 import Link from 'next/link';
+import { Badge } from '@/components/vultui/Badge';
 
 export const MDXComponents = {
   //h1: (props: any) => <h1 style={{ color: 'tomato', fontSize: '3rem' }} {...props} />,
@@ -14,9 +15,15 @@ export const MDXComponents = {
         background: '#eee',
         padding: '10px 20px',
         borderRadius: "4px",
-        overflow: "scroll"
+        overflow: "scroll",
+        marginBlock: "40px"
       }}>{props.children}</code>
   </div>,
+  blockquote: (props: any) => <Badge
+    bg="#ffa719"
+    style={{ color: "#7a500d", fontSize: "16px", fontWeight: "200", marginBlock: "20px", borderRadius: "6px", paddingInline: "10px", paddingBlock: "3px" }}
+    translucent={true}>{props.children}</Badge>,
+  h3: (props: any) => <h3 className='text-lg font-bold bg-black w-fit text-white px-3 mt-8 mb-5'>{props.children}</h3>
   //ul: (props: any) => <ul style={{ listStyle: 'square inside' }} {...props} />,
 };
 

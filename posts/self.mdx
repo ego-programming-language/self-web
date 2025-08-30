@@ -1,5 +1,5 @@
 ---
-title: "whoweare"
+title: "self"
 authors: [
   {
     name: "noreplydev"
@@ -11,10 +11,8 @@ date: "2025-08-04"
 ---
 
 self is a virtual machine. another one? well. it's a virtual machine with an 
-architecture with native AI instructions. allowing things like this: 
-
-<br/>
-<br/>
+architecture with native AI instructions. Something like the google's v8 but
+from a native AI integration vision. allowing things like this: 
 
 ```swift
 import ai
@@ -31,6 +29,56 @@ and put the content 'hello world!' on it
 
 actions.map(exec_action)
 ```
+i dont think it's required to mention, but that code generates a file called demo.txt
+with the content "hello world!" on it. how? it uses the *__self__* stdlib as available functions
+to execute. 
+
+<br/>
+
+the potential of this it's big since it not only executes the function, if you look closely at the
+code, it returns a vector of __Action__ structs and then you're the one who decides to execute that __Action__ or not.
+
+<br/>
+
+but is this the real potential of a virtual machine with native AI integration at machine level? well that's the real
+question. the AI opens a new world of solutions for semantic/contextual/non-discretizable problems. 
+
+> NOTE: in this post, the word "AI" will be used indistinguishably with Large Language Models, as one implementation of AI. This distinction is made because future branches of AI could lead to new usage patterns.
+
+### AI impact on deterministic programming
+One thing that has been on the table is the lack of determinism of an AI output. how the stochastic generated output affects the usage of AI 
+on deterministic-required environments. And, it's true. If we think about it, that lack of determinism it's perfect, because we dont need AI
+to operate on deterministic environments, we need AI to resolve semantical, contextual and non-discretizable problems, thin about it, we've
+able to read pdf's from 20 to 30 years, but now, we can infer if the pdf is talking about cats. How we could infer that without AI? pdf raw 
+reading? n-grams generation from text for tokens generation? dictionary matching for each topic? tags extraction?... basically, we based our
+"deterministic execution" on euristics and in the pdf case we can see it very clear, but, what about a program execution? isn't it the same thing?
+
+<br/>
+
+turing used to define a "turing machine" like a sliced tape processor, where each tape means something. let's take that mental model, let's imagine
+that our tape have a program to say hello world, something like: 
+
+```
+// two tape slices
+["hello world"]-[PRINT]
+```
+
+historically this tape has had slices of different types like LOAD or JUMP to load variables or navigate through the tape but, let's think about
+another tape slice type, things like: __INFER__ or __DO__. okay, but what are this types? technically they could be anything we want them to be,
+but the real potent thing is use them as AI instructions like the __PRINT__ one but, and here is the key, with their undeterministic behaviour. 
+PRINT will always __PRINT__ what you told, but, __INFER__? let's define then. __INFER__ should allow you to generate an inferation of a value based
+on some input. 
+
+<br/>
+
+for example: __INFER__ "a color" -> "red"
+
+<br/>
+
+but, a moment, in this world, the __INFER__ undeterministic output shines. So why is said that undeterministic behaviour gives problems? well, the 
+thing is that __the problem is the output type, not the output__.
+
+
 
 <br/>
 <br/>
