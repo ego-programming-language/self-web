@@ -10,33 +10,40 @@ id: "self"
 date: "2025-08-04"
 ---
 
-self is a virtual machine. another one? well. it's a virtual machine with an 
-architecture with native AI instructions. Something like the google's v8 but
-from a native AI integration vision. allowing things like this: 
+# the problem is the output type, not the output
+
+*__self__* is a virtual machine. Another one? well, yes, but with native AI instructions.
+Think of V8 or the JVM, but designed from the ground up with AI instructions as part of the 
+instruction set, that lets you do things like: 
 
 ```swift
 import ai
+
+let actions = ai.do("
+infer the value of 'hello world!' in chinese and
+create a file called demo.txt and put the content
+on it.
+")
 
 fn exec_action(item) {
     println("executing action: ", item)
     item.exec()
 }
-
-let actions = ai.do("
-create a file called demo.txt 
-and put the content 'hello world!' on it
-")
-
 actions.map(exec_action)
 ```
+
 i dont think it's required to mention, but that code generates a file called demo.txt
-with the content "hello world!" on it. how? it uses the *__self__* stdlib as available functions
-to execute. 
+with the content "hello world!" on it but, in chinese. how? it uses the *__self__* stdlib as available functions
+to execute. the output of the execution will be: 
 
-<br/>
+```
+executing action: Action(ai.infer)
+executing action: Action(fs.write_file)
+```
 
-the potential of this it's big since it not only executes the function, if you look closely at the
-code, it returns a vector of __Action__ structs and then you're the one who decides to execute that __Action__ or not.
+the potential of this it's big since it not executes the function, if you look closely at the
+code, it returns a vector of __Action__ structs and then you're the one who decides to execute that __Action__ or not. 
+based on rules like if the operation it's destructive.
 
 <br/>
 
@@ -47,15 +54,18 @@ question. the AI opens a new world of solutions for semantic/contextual/non-disc
 
 ### AI impact on deterministic programming
 One thing that has been on the table is the lack of determinism of an AI output. how the stochastic generated output affects the usage of AI 
-on deterministic-required environments. And, it's true. If we think about it, that lack of determinism it's perfect, because we dont need AI
-to operate on deterministic environments, we need AI to resolve semantical, contextual and non-discretizable problems, thin about it, we've
-able to read pdf's from 20 to 30 years, but now, we can infer if the pdf is talking about cats. How we could infer that without AI? pdf raw 
-reading? n-grams generation from text for tokens generation? dictionary matching for each topic? tags extraction?... basically, we based our
-"deterministic execution" on euristics and in the pdf case we can see it very clear, but, what about a program execution? isn't it the same thing?
+on deterministic-required environments. And, it's true but if we think about it, that lack of determinism it's perfect, because we dont need AI
+to operate on deterministic environments, we need AI to resolve semantical, contextual and non-discretizable problems. 
 
 <br/>
 
-turing used to define a "turing machine" like a sliced tape processor, where each tape means something. let's take that mental model, let's imagine
+we've been able to process pdf's for the past 25 or 30 years, but now with AI we can infer if the pdf is talking about "pink cats". How we could infer that without AI? pdf raw 
+reading? n-grams generation from text? dictionary keywords matching for each topic? tags extraction?... basically, we based our "deterministic execution" 
+on euristics. the pdf example it's very clear because it's an static problem but, what about a program execution? isn't it the same thing?
+
+<br/>
+
+turing used to define a "turing machine" like a sliced tape processor, where each tape slice means something. let's take that mental model, let's imagine
 that our tape have a program to say hello world, something like: 
 
 ```
@@ -63,29 +73,31 @@ that our tape have a program to say hello world, something like:
 ["hello world"]-[PRINT]
 ```
 
-historically this tape has had slices of different types like LOAD or JUMP to load variables or navigate through the tape but, let's think about
-another tape slice type, things like: __INFER__ or __DO__. okay, but what are this types? technically they could be anything we want them to be,
-but the real potent thing is use them as AI instructions like the __PRINT__ one but, and here is the key, with their undeterministic behaviour. 
-PRINT will always __PRINT__ what you told, but, __INFER__? let's define then. __INFER__ should allow you to generate an inferation of a value based
+historically this tape has had slices of different types like LOAD or JUMP to load variables or navigate through the tape respectively but, let's pick
+another tape slice type like: __INFER__. what is this type? technically it could be anything we want it to be,
+but the real potent thing is use them as AI instructions like __PRINT__ but (and here is the key) with their undeterministic behaviour. 
+PRINT will always __PRINT__ what you told, but __INFER__? __INFER__ should allow you to generate an inference of a value based
 on some input. 
 
 <br/>
 
-for example: __INFER__ "a color" -> "red"
+for example: __INFER__ "a random color" -> "red"
 
 <br/>
 
-but, a moment, in this world, the __INFER__ undeterministic output shines. So why is said that undeterministic behaviour gives problems? well, the 
+but, a moment, in this world, the __INFER__ undeterministic output shines, it could infer values based on runtime context or on non-discretizable problems. 
+Then why is a normal tend to think that the AI cannot be used as a program native instruction? well, normally it's said that the problem is the output but the 
 thing is that __the problem is the output type, not the output__.
 
 
 ### the problem is the output type, not the output
-let's think about, if we're speaking with people, the problem is if we say "house" or "home" or if we say "house" and "casa" (spanish word for "house").
-we've been looking every time that the AI could output "house" or "home" but the real impact is to know if the AI is answering in english or spanish, metaphorically.
+if we were speaking with random people, the problem would be if we say "house" or "home" or if we say "house" and "casa" (spanish word for "house")? in that
+example the output is the word, and the type is the language. with AI solutions we tend to try to enforce "house" or "home" response but the real impact is, 
+can we know/enforce/cast if the AI is answering in english or spanish, metaphorically. in other words, we need to know which type outputs the AI.
 
 <br/>
 
-so, if we came back to our __tape processor__ we need __INFER__ instruction to be able to cast enforce and ensure a type system. this will include a fallback system too
+so, if we came back to our __tape processor__ we need __INFER__ instruction to be able to cast, enforce and ensure a type system. this will include a fallback system too
 which will be used to handle cases where our __AI__ machine outputs something "wrong". technically this __AI__ machine does not need to be on the same machine as __self__
 which gives the possibility to run self on any today computer.
 
@@ -93,15 +105,5 @@ which gives the possibility to run self on any today computer.
 <br/>
 <br/>
 
-```
-import ai
-
-let input = "admin@admin.admin"
-if ai.infer("does <arg> input looks like a sql injection?", input) {
-  println("warning!")
-} else {
-  println("secure!")
-}
-```
 
 
