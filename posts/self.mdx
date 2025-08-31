@@ -1,12 +1,12 @@
 ---
-title: "self"
+title: "*__self__*"
 authors: [
   {
     name: "noreplydev"
   }, 
 ]
 category: ["-"]
-id: "self"
+id: "*__self__*"
 date: "2025-08-04"
 ---
 
@@ -15,6 +15,8 @@ date: "2025-08-04"
 *__self__* is a virtual machine. Another one? well, yes, but with native AI instructions.
 Think of V8 or the JVM, but designed from the ground up with AI instructions as part of the 
 instruction set, that lets you do things like: 
+
+> NOTE: every code snippet in the post is real functional code
 
 ```swift
 import ai
@@ -52,7 +54,7 @@ question. the AI opens a new world of solutions for semantic/contextual/non-disc
 
 > NOTE: in this post, the word "AI" will be used indistinguishably with Large Language Models, as one implementation of AI. This distinction is made because future branches of AI could lead to new usage patterns.
 
-### AI impact on deterministic programming
+### AI impact on deterministic software programming
 One thing that has been on the table is the lack of determinism of an AI output. how the stochastic generated output affects the usage of AI 
 on deterministic-required environments. And, it's true but if we think about it, that lack of determinism it's perfect, because we dont need AI
 to operate on deterministic environments, we need AI to resolve semantical, contextual and non-discretizable problems. 
@@ -65,8 +67,8 @@ on euristics. the pdf example it's very clear because it's an static problem but
 
 <br/>
 
-turing used to define a "turing machine" like a sliced tape processor, where each tape slice means something. let's take that mental model, let's imagine
-that our tape have a program to say hello world, something like: 
+let's go back to what a program was. turing used to define a "turing machine" like a sliced tape processor, where each tape slice means something. the whole tape it's called program. let's take that mental model and imagine
+that our tape to say hello world (a.k.a our program), is something like: 
 
 ```
 // two tape slices
@@ -86,21 +88,68 @@ for example: __INFER__ "a random color" -> "red"
 <br/>
 
 but, a moment, in this world, the __INFER__ undeterministic output shines, it could infer values based on runtime context or on non-discretizable problems. 
-Then why is a normal tend to think that the AI cannot be used as a program native instruction? well, normally it's said that the problem is the output but the 
+Then why is a normal tend think that the AI cannot be used as a program native instruction? well, normally it's said that the problem is the output but the 
 thing is that __the problem is the output type, not the output__.
 
-
-### the problem is the output type, not the output
 if we were speaking with random people, the problem would be if we say "house" or "home" or if we say "house" and "casa" (spanish word for "house")? in that
 example the output is the word, and the type is the language. with AI solutions we tend to try to enforce "house" or "home" response but the real impact is, 
 can we know/enforce/cast if the AI is answering in english or spanish, metaphorically. in other words, we need to know which type outputs the AI.
 
 <br/>
 
-so, if we came back to our __tape processor__ we need __INFER__ instruction to be able to cast, enforce and ensure a type system. this will include a fallback system too
-which will be used to handle cases where our __AI__ machine outputs something "wrong". technically this __AI__ machine does not need to be on the same machine as __self__
-which gives the possibility to run self on any today computer.
 
+### *__self__*
+*__self__*, implements a type system where each AI instruction returns a typed response, which if it fails, *__self__* itself fallbacks to a nothing type or to the enforced
+type. with this approach, *__self__* can have control flow based on AI instructions returned values. since this values are generated at runtime (but they could not with a caching system) we
+could create dynamic control flow, based on semantics or context, like: 
+
+```
+import ai
+
+let input = "' or 1=1--"
+if ai.infer("does <arg> input looks like an sql injection?", input) {
+  println("warning!")
+} else {
+  println("secure!")
+}
+```
+
+imagine setting this code snippet in front of a database query processor. or we could have things like a file search system based on a search topic: 
+
+```
+import fs 
+
+let search_topic = "cats"
+let files = fs.read_dir("./files")
+
+fn iter_files(file) {
+  let file_path = path.join("./files", file)
+  let content = fs.read_file(file_path)
+  if ai.infer("<arg> content talks about " + search_topic + "?", content) {
+    println("new found at: " + file_path)
+  }
+}
+
+files.map(iter_files)
+```
+
+at this point it could appear the question, what distinguishes *__self__* from a library on top of any other virtual machine. 
+
+### *__self__* as backend
+right now, *__self__* is the virtual machine without no more, but, how can we write code for *__self__* then? ego. ego is a programming language built for
+*__self__* programming, but it's not required to use *__self__*. ego is a frontend for *__self__* but a compiler from a webui to *__self__* bytecode or a compiler from
+python to *__self__* could be made. *__self__* is the backend, the infrastructure for the programs with native AI integration. Currently *__self__* uses available state
+of the art AI models from very sound providers like OpenAI or MistralAI, allowing different providers and even defining your own custom providers.
+
+<br/>
+
+the *__self__* virtual machine is built in rust, so we could compile to have *__self__* on the browser, on the phone, on the desktop, even in esp32 devices. imagine esp32 with
+native AI integration for contextual control flow.
+
+<br/>
+
+all of this is thanks to *__self__* being its own virtual machine, would be difficult to achieve all this being a simple javascript library. *__self__* is built from
+zero to have 0 axioms about what should or what shouldn't do a virtual machine with native AI integration in the instruction set.
 
 <br/>
 <br/>
