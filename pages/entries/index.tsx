@@ -11,9 +11,9 @@ export const MDXComponents = {
     >{props.children}</h1>
   </div>,
   h3: (props: any) => <h3 className='text-lg font-light bg-black w-fit text-white px-3 mt-8 mb-5'>{props.children}</h3>,
-  a: (props: any) => <a style={{ fontWeight: "normal", color: "#0056ff" }}{...props} />,
+  a: (props: any) => <a target='_blank' style={{ fontWeight: "normal", color: "#0056ff" }}{...props} />,
   p: (props: any) => <p style={{ fontWeight: "normal" }}{...props} />,
-  code: (props: any) => <div className='flex flex-col w-full '>
+  code: (props: any) => <span className='flex flex-col w-full '>
     <code
       style={{
         width: "100%",
@@ -23,7 +23,7 @@ export const MDXComponents = {
         overflow: "scroll",
         marginBlock: "40px"
       }}>{props.children}</code>
-  </div>,
+  </span>,
   blockquote: (props: any) => <Badge
     bg="#ffa719"
     style={{ color: "#7a500d", fontSize: "16px", fontWeight: "200", marginBlock: "20px", borderRadius: "6px", paddingInline: "10px", paddingBlock: "3px" }}

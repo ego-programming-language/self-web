@@ -1,28 +1,28 @@
 ---
-title: "*__self__*"
+title: "self"
 authors: [
   {
     name: "noreplydev"
   }, 
 ]
 category: ["-"]
-id: "*__self__*"
+id: "hello, friend"
 date: "2025-08-04"
 ---
 
-# the problem is the output type, not the output
+# The Problem Is the Output Type, Not the Output
 
 *__self__* is a virtual machine designed to integrate AI instructions as
 part of the instruction set. Making the AI a first class citizen instruction in the VM. 
 Think of V8 or the JVM, that lets you do things like: 
 
-> NOTE: every code snippet in the post is real functional code
+> NOTE: Every code snippet in this post is real, functional code.
 
 ```swift
 import ai
 
 let actions = ai.do("
-infer the value of 'hello world!' in chinese and
+infer the value of 'hello world!' in Chinese and
 create a file called demo.txt and put the content
 on it.
 ")
@@ -31,80 +31,77 @@ fn exec_action(item) {
     println("executing action: ", item)
     item.exec()
 }
+
 actions.map(exec_action)
 ```
 
-i don’t think it’s required to mention, but that code generates a file called demo.txt
-with the content "hello world!" in chinese. how? it uses the self stdlib as the available functions
-to execute. the output of the execution will be:
+That code creates demo.txt, containing "hello world!" in Chinese. How? It uses the _self_ standard library
+ as the available functions to execute. The output looks like this:
 
 ```
 executing action: Action(ai.infer)
 executing action: Action(fs.write_file)
 ```
 
-the potential of this is big since it does not just execute the function. if you look closely at the
-code, it returns a vector of __Action__ structs, and then you're the one who decides whether to execute that __Action__ or not,
-based on rules like whether the operation is destructive.
+The potential here is huge, because it doesn’t just execute the function. It returns a vector of **Action** structs, and you 
+decide whether to execute each **Action** or not, for example, based on whether the operation is destructive.
 
 <br/>
 
-but is this the real potential of a virtual machine with native AI integration at the machine level? well, that’s the real
-question. AI opens a new world of solutions for semantic, contextual, and non-discretizable problems.
+But is this the real potential of a virtual machine with native AI integration at the machine level? That’s the real question. 
+AI opens up an entirely new world of solutions for semantic, contextual, and non-discretizable problems.
 
-> NOTE: in this post, the word "AI" will be used interchangeably with Large Language Models, as one implementation of AI. this distinction is made because future branches of AI could lead to new usage patterns.
+> NOTE: In this post, "AI" will be used interchangeably with Large Language Models, as one implementation of AI. This distinction matters because future branches of AI could enable new usage patterns.
 
-### AI impact on deterministic software programming
-One thing that has been on the table is the lack of determinism of an AI output. how does the stochastically generated output affect the usage of AI
-on deterministic-required environments? and, it's true, but if we think about it, that lack of determinism is perfect, because we don’t need AI
-to operate in deterministic environments, we need AI to resolve semantic, contextual and non-discretizable problems.
+### AI impact on deterministic software
 
-<br/>
-
-we’ve been able to process pdfs for the past 25 or 30 years, but now with AI we can infer if a pdf is talking about "pink cats". how could we infer that without AI? raw pdf reading? n-gram generation from text? dictionary keyword matching for each topic? tag extraction?... basically, we based our "deterministic execution"
-on heuristics. the pdf example is very clear because it’s a static problem but, what about program execution? isn’t it the same thing?
+One common concern is the lack of determinism in AI outputs. How does a stochastically generated 
+output fit into environments that require determinism? Internally, models are deterministic given 
+the same state and seed, but for the consumer the output cannot be guaranteed or controlled in that way. 
+And that’s exactly the point: we don’t need AI to operate in deterministic systems. 
+We need it to solve semantic, contextual, and non-discretizable problems.
 
 <br/>
 
-let's go back to what a program was. turing used to define a "turing machine" like a sliced tape processor, where each tape slice means something. the whole tape it's called program. let's take that mental model and imagine
-that our tape to say hello world (a.k.a our program), is something like: 
+For decades we’ve been able to process PDFs, but now with AI we can infer if a PDF talks about "pink cats".
+How could we do that without AI? Raw PDF parsing? N-gram generation? Keyword matching? Tag extraction? In practice, 
+all of this was just deterministic execution based on heuristics. The PDF example is simple, but what about program
+execution? Isn’t it essentially the same?
+
+<br/>
+
+Let’s go back to what a program is. Turing described a "Turing machine" as a sliced tape processor, where each tape
+slice means something. The whole tape is the program. Now imagine our tape for printing "hello world" looks like this:
 
 ```
 // two tape slices
 ["hello world"]-[PRINT]
 ```
 
-historically this tape has had slices of different types like __LOAD__ or __JUMP__ to load variables or navigate through the tape respectively but, let’s pick
-another tape slice type: __INFER__. what is this type? technically it could be anything we want it to be,
-but the real potent thing is to use them as __AI__ instructions like __PRINT__ but (and here is the key) with their non-deterministic behavior.
-__PRINT__ will always __PRINT__ what you told, but __INFER__? __INFER__ should allow you to generate an inference of a value based
-on some input.
+Historically the tape contained instructions like _LOAD_ or _JUMP_ to manage data and control flow. Now imagine adding a new
+instruction type: _INFER_. Technically _INFER_ can mean anything we define, but the powerful thing is to make it an _AI instruction_,
+unlike _PRINT_, which deterministically outputs a value, `INFER` allows you to generate an inference of a value based on some input.
+For example:
 
-<br/>
-
-for example: 
 ```
 // two tape slices
-["a random color"]-[INFER] -> "red"
+["a random color"]-[INFER]  -> "red"
 ```
 
-<br/>
-
-but, a moment, in this world, the __INFER__ undeterministic output shines, it could infer values based on runtime context or on non-discretizable problems. 
-Then why is a normal tend think that the AI cannot be used as a program native instruction? well, normally it's said that the problem is the output but the 
-thing is that __the problem is the output type, not the output__.
-
-if we were speaking with random people, the problem would be if we say "house" or "home" or if we say "house" and "casa" (spanish word for "house")? in that
-example the output is the word, and the type is the language. with AI solutions we tend to try to enforce "house" or "home" response but the real impact is, 
-can we know/enforce/cast if the AI is answering in english or spanish, metaphorically. in other words, we need to know which type outputs the AI.
+In this context, the _INFER_ non-deterministic output shines, it could infer values based on runtime context or on non-discretizable problems.
+So why do we often assume AI cannot be used as a native program instruction? The thing is, **the problem is the output type, not the output**.
 
 <br/>
 
+Imagine we’re talking with random people, is the problem whether they say "house" or "home"? Or whether they say "house" and "casa" (Spanish for "house")?
+In that case, the output is the word, but the **type** is the language. With AI, we often try to enforce "house" vs "home," but the real question is: can 
+we enforce or cast whether the AI is answering in English or Spanish? 
 
 ### *self*
-self implements a type system where each AI instruction returns a typed response, which, if it fails, self itself fallbacks to a nothing type or to the 
-enforced type. with this approach, self can have control flow based on AI instruction return values. since these values are generated at runtime 
-(though they could not with a caching system), we could create dynamic control flow based on semantics or context, like:
+
+*__self__* implements a type system where each AI instruction returns a typed response. If it fails, *__self__* falls back to a *nothing* type or the enforced 
+type. With this approach, *__self__* enables control flow based on AI instructions return values. Since these values are generated at runtime (though caching
+could make them deterministic), we can build dynamic control flow based on semantics or context, such as:
 
 ```
 import ai
@@ -117,7 +114,7 @@ if ai.infer("does <arg> input looks like an sql injection?", input) {
 }
 ```
 
-imagine setting this code snippet in front of a database query engine. or we could have things like a file search system based on a search topic: 
+Imagine setting this code snippet in front of a database query engine. Or consider a file-search example based on semantic topics:
 
 ```
 import fs 
@@ -136,37 +133,36 @@ fn iter_files(file) {
 files.map(iter_files)
 ```
 
-at this point, it could appear the question: what distinguishes *__self__* from a library on top of any other virtual machine?
+At this point, it could appear the question: what distinguishes *__self__* from a library on top of any other virtual machine?
 
 ### *self* as backend
-right now, self is just a virtual machine. but then, how do we actually write code for self? ego. ego 
-is a programming language built for self programming, but it’s not the only way to use self. ego works as a frontend compiling to 
-self, but you could also imagine a compiler from a web UI to self bytecode, or even one from python to self. self is the backend, 
-infrastructure for programs with native AI integration. currently, self relies on state-of-the-art AI models from well-established 
-providers like OpenAI or MistralAI, while also allowing you to plug in different providers or even define your own.
-<br/>
 
-the self virtual machine is built in rust, which means it can be compiled to run on the browser, on mobile devices, on the desktop, 
-and even on microcontrollers like the esp32. imagine an esp32 with native AI integration for contextual control flow.
+*__self__* is a virtual machine. But how do we actually write code for it? _**ego**_. _ego_ is a programming language built for *__self__*, but it’s not the 
+only option. _ego_ works as a frontend that compiles to _self_, but you could also imagine a compiler from a web UI, or even from Python, to *__self__* bytecode. 
+In other words, *__self__* is the backend, the infrastructure for programs with native AI integration. Currently, *__self__* relies on state-of-the-art AI models from
+providers like OpenAI and MistralAI, while also allowing you to plug in different providers or even define your own.
 
 <br/>
 
-all of this is possible because self is its own virtual machine. achieving the same would be almost impossible with just a simple 
-javascript library. self is built from scratch with zero axioms about what a virtual machine with native AI instructions should or
+The *__self__* virtual machine is built in Rust, which means it can be compiled to run on the browser, on mobile devices, on desktop, and even on microcontrollers
+like the ESP32. Imagine an ESP32 with native AI integration for contextual control flow.
+
+<br/>
+
+All of this is possible because *__self__* is its own virtual machine. Achieving the same with just
+a simple JavaScript library would be almost impossible. *__self__*  is built from scratch with zero 
+axioms about what a virtual machine with native AI instructions should or
 shouldn’t be.
  
 <br/>
 
-this is only the beginning of many possibilities that could be built with a native integration of AI inside a virtual machine. self
-is actively under development, and soon there will be closed releases available to try out. join the self [discord](https://discord.gg/WFpPHKM9Dz) to be among the first
+This is only the beginning of a wide range of possibilities that could be built with native integration of AI at a virtual machine level.
+*__self__* is actively under development, and soon there will be closed releases available to try out. join the self [discord](https://discord.gg/WFpPHKM9Dz) to be among the first
 people to experiment with it. 
 
 <br/>
 
-goodbye, friend
+Goodbye, friend.
 
 <br/>
 <br/>
-
-
-
