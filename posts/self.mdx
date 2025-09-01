@@ -12,9 +12,9 @@ date: "2025-08-04"
 
 # the problem is the output type, not the output
 
-*__self__* is a virtual machine. Another one? well, yes, but with native AI instructions.
-Think of V8 or the JVM, but designed from the ground up with AI instructions as part of the 
-instruction set, that lets you do things like: 
+*__self__* is a virtual machine designed to integrate AI instructions as
+part of the instruction set. Making the AI a first class citizen instruction in the VM. 
+Think of V8 or the JVM, that lets you do things like: 
 
 > NOTE: every code snippet in the post is real functional code
 
@@ -34,36 +34,35 @@ fn exec_action(item) {
 actions.map(exec_action)
 ```
 
-i dont think it's required to mention, but that code generates a file called demo.txt
-with the content "hello world!" on it but, in chinese. how? it uses the *__self__* stdlib as available functions
-to execute. the output of the execution will be: 
+i don’t think it’s required to mention, but that code generates a file called demo.txt
+with the content "hello world!" in chinese. how? it uses the self stdlib as the available functions
+to execute. the output of the execution will be:
 
 ```
 executing action: Action(ai.infer)
 executing action: Action(fs.write_file)
 ```
 
-the potential of this it's big since it not executes the function, if you look closely at the
-code, it returns a vector of __Action__ structs and then you're the one who decides to execute that __Action__ or not. 
-based on rules like if the operation it's destructive.
+the potential of this is big since it does not just execute the function. if you look closely at the
+code, it returns a vector of __Action__ structs, and then you're the one who decides whether to execute that __Action__ or not,
+based on rules like whether the operation is destructive.
 
 <br/>
 
-but is this the real potential of a virtual machine with native AI integration at machine level? well that's the real
-question. the AI opens a new world of solutions for semantic/contextual/non-discretizable problems. 
+but is this the real potential of a virtual machine with native AI integration at the machine level? well, that’s the real
+question. AI opens a new world of solutions for semantic, contextual, and non-discretizable problems.
 
-> NOTE: in this post, the word "AI" will be used indistinguishably with Large Language Models, as one implementation of AI. This distinction is made because future branches of AI could lead to new usage patterns.
+> NOTE: in this post, the word "AI" will be used interchangeably with Large Language Models, as one implementation of AI. this distinction is made because future branches of AI could lead to new usage patterns.
 
 ### AI impact on deterministic software programming
-One thing that has been on the table is the lack of determinism of an AI output. how the stochastic generated output affects the usage of AI 
-on deterministic-required environments. And, it's true but if we think about it, that lack of determinism it's perfect, because we dont need AI
-to operate on deterministic environments, we need AI to resolve semantical, contextual and non-discretizable problems. 
+One thing that has been on the table is the lack of determinism of an AI output. how does the stochastically generated output affect the usage of AI
+on deterministic-required environments? and, it's true, but if we think about it, that lack of determinism is perfect, because we don’t need AI
+to operate in deterministic environments, we need AI to resolve semantic, contextual and non-discretizable problems.
 
 <br/>
 
-we've been able to process pdf's for the past 25 or 30 years, but now with AI we can infer if the pdf is talking about "pink cats". How we could infer that without AI? pdf raw 
-reading? n-grams generation from text? dictionary keywords matching for each topic? tags extraction?... basically, we based our "deterministic execution" 
-on euristics. the pdf example it's very clear because it's an static problem but, what about a program execution? isn't it the same thing?
+we’ve been able to process pdfs for the past 25 or 30 years, but now with AI we can infer if a pdf is talking about "pink cats". how could we infer that without AI? raw pdf reading? n-gram generation from text? dictionary keyword matching for each topic? tag extraction?... basically, we based our "deterministic execution"
+on heuristics. the pdf example is very clear because it’s a static problem but, what about program execution? isn’t it the same thing?
 
 <br/>
 
@@ -75,15 +74,19 @@ that our tape to say hello world (a.k.a our program), is something like:
 ["hello world"]-[PRINT]
 ```
 
-historically this tape has had slices of different types like LOAD or JUMP to load variables or navigate through the tape respectively but, let's pick
-another tape slice type like: __INFER__. what is this type? technically it could be anything we want it to be,
-but the real potent thing is use them as AI instructions like __PRINT__ but (and here is the key) with their undeterministic behaviour. 
-PRINT will always __PRINT__ what you told, but __INFER__? __INFER__ should allow you to generate an inference of a value based
-on some input. 
+historically this tape has had slices of different types like __LOAD__ or __JUMP__ to load variables or navigate through the tape respectively but, let’s pick
+another tape slice type: __INFER__. what is this type? technically it could be anything we want it to be,
+but the real potent thing is to use them as __AI__ instructions like __PRINT__ but (and here is the key) with their non-deterministic behavior.
+__PRINT__ will always __PRINT__ what you told, but __INFER__? __INFER__ should allow you to generate an inference of a value based
+on some input.
 
 <br/>
 
-for example: __INFER__ "a random color" -> "red"
+for example: 
+```
+// two tape slices
+["a random color"]-[INFER] -> "red"
+```
 
 <br/>
 
@@ -98,10 +101,10 @@ can we know/enforce/cast if the AI is answering in english or spanish, metaphori
 <br/>
 
 
-### *__self__*
-*__self__*, implements a type system where each AI instruction returns a typed response, which if it fails, *__self__* itself fallbacks to a nothing type or to the enforced
-type. with this approach, *__self__* can have control flow based on AI instructions returned values. since this values are generated at runtime (but they could not with a caching system) we
-could create dynamic control flow, based on semantics or context, like: 
+### *self*
+self implements a type system where each AI instruction returns a typed response, which, if it fails, self itself fallbacks to a nothing type or to the 
+enforced type. with this approach, self can have control flow based on AI instruction return values. since these values are generated at runtime 
+(though they could not with a caching system), we could create dynamic control flow based on semantics or context, like:
 
 ```
 import ai
@@ -114,7 +117,7 @@ if ai.infer("does <arg> input looks like an sql injection?", input) {
 }
 ```
 
-imagine setting this code snippet in front of a database query processor. or we could have things like a file search system based on a search topic: 
+imagine setting this code snippet in front of a database query engine. or we could have things like a file search system based on a search topic: 
 
 ```
 import fs 
@@ -133,23 +136,34 @@ fn iter_files(file) {
 files.map(iter_files)
 ```
 
-at this point it could appear the question, what distinguishes *__self__* from a library on top of any other virtual machine. 
+at this point, it could appear the question: what distinguishes *__self__* from a library on top of any other virtual machine?
 
-### *__self__* as backend
-right now, *__self__* is the virtual machine without no more, but, how can we write code for *__self__* then? ego. ego is a programming language built for
-*__self__* programming, but it's not required to use *__self__*. ego is a frontend for *__self__* but a compiler from a webui to *__self__* bytecode or a compiler from
-python to *__self__* could be made. *__self__* is the backend, the infrastructure for the programs with native AI integration. Currently *__self__* uses available state
-of the art AI models from very sound providers like OpenAI or MistralAI, allowing different providers and even defining your own custom providers.
+### *self* as backend
+right now, self is just a virtual machine. but then, how do we actually write code for self? ego. ego 
+is a programming language built for self programming, but it’s not the only way to use self. ego works as a frontend compiling to 
+self, but you could also imagine a compiler from a web UI to self bytecode, or even one from python to self. self is the backend, 
+infrastructure for programs with native AI integration. currently, self relies on state-of-the-art AI models from well-established 
+providers like OpenAI or MistralAI, while also allowing you to plug in different providers or even define your own.
+<br/>
+
+the self virtual machine is built in rust, which means it can be compiled to run on the browser, on mobile devices, on the desktop, 
+and even on microcontrollers like the esp32. imagine an esp32 with native AI integration for contextual control flow.
 
 <br/>
 
-the *__self__* virtual machine is built in rust, so we could compile to have *__self__* on the browser, on the phone, on the desktop, even in esp32 devices. imagine esp32 with
-native AI integration for contextual control flow.
+all of this is possible because self is its own virtual machine. achieving the same would be almost impossible with just a simple 
+javascript library. self is built from scratch with zero axioms about what a virtual machine with native AI instructions should or
+shouldn’t be.
+ 
+<br/>
+
+this is only the beginning of many possibilities that could be built with a native integration of AI inside a virtual machine. self
+is actively under development, and soon there will be closed releases available to try out. join the self [discord](https://discord.gg/WFpPHKM9Dz) to be among the first
+people to experiment with it. 
 
 <br/>
 
-all of this is thanks to *__self__* being its own virtual machine, would be difficult to achieve all this being a simple javascript library. *__self__* is built from
-zero to have 0 axioms about what should or what shouldn't do a virtual machine with native AI integration in the instruction set.
+goodbye, friend
 
 <br/>
 <br/>

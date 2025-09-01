@@ -7,9 +7,11 @@ import { Badge } from '@/components/vultui/Badge';
 
 export const MDXComponents = {
   h1: (props: any) => <div className='w-full h-fit grid place-items-center'>
-    <h1 className='text-xl font-light bg-[#0056ff] w-fit text-white text-center px-5 my-15'>{props.children}</h1>
+    <h1 className={'text-lg font-extralight bg-[#0056ff] w-fit text-white text-center px-5 my-10'}
+    >{props.children}</h1>
   </div>,
-  h3: (props: any) => <h3 className='text-lg font-bold bg-black w-fit text-white px-3 mt-8 mb-5'>{props.children}</h3>,
+  h3: (props: any) => <h3 className='text-lg font-light bg-black w-fit text-white px-3 mt-8 mb-5'>{props.children}</h3>,
+  a: (props: any) => <a style={{ fontWeight: "normal", color: "#0056ff" }}{...props} />,
   p: (props: any) => <p style={{ fontWeight: "normal" }}{...props} />,
   code: (props: any) => <div className='flex flex-col w-full '>
     <code
