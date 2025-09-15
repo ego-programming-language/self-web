@@ -1,8 +1,9 @@
 export const colors = {
-    primary: "#ffffff",
+    primary: "#00143B",
     secondary: "#0056ff",
+    ternary: "#ffce39",
     primarySoft: "#404040",
-    background: "#000000",
+    background: "#ffffff",
     backgroundSecondary: "#131313",
     backgroundHighlight: "#2C2A2A",
 }
