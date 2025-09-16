@@ -5,6 +5,7 @@ import { Badge } from "./vultui/Badge";
 import { grotesk } from "@/pages/_app";
 import { c, colors } from "@/theme";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export function Root() {
   const size = useSize()
@@ -19,6 +20,7 @@ export function Root() {
 
   return <main className="relative h-full w-full flex flex-col justify-center items-center z-0 gap-5 overflow-y-scroll">
     <img src="/self.png" className="h-[100px] opacity-0 animate-[appear-logo_0.4s_ease-in-out_forwards] [animation-delay:0.3s]" />
+    <Smoke />
     <div className="flex flex-col justify-center items-center h-fit opacity-0 animate-[appear_0.5s_ease-in-out_forwards] [animation-delay:0.5s]">
       <h1 className={"text-center text-6xl font-[300] " + grotesk.className}>the AI native <br /> virtual machine</h1>
       <div className="flex flex-row gap-3 mt-5">
@@ -79,4 +81,57 @@ export function Root() {
       </div>
     </div>
   </main >
+}
+
+
+
+export function Smoke() {
+  return (
+    <div className="absolute w-full h-full overflow-hidden">
+      <div className="fog mx-auto" />
+      <style>{`
+        .fog {
+          position: absolute;
+          inset: 0;
+          margin: auto;
+          width: 360px;
+          height: 360px;
+          filter: blur(100px);
+          opacity: 0.40;
+          animation: breathe 6s ease-in-out infinite;
+        }
+
+        .fog::before {
+          content: "";
+          position: absolute;
+          inset: -30%;
+          border-radius: 9999px;
+          background: conic-gradient(
+            from 0deg at 50% 50%,
+            rgba(0, 86, 255, 0.85) 0deg,
+            rgba(0, 86, 255, 0.12) 90deg,
+            rgba(0, 86, 255, 0.85) 180deg,
+            rgba(0, 86, 255, 0.12) 270deg,
+            rgba(0, 86, 255, 0.85) 360deg
+          );
+          animation: spin 16s linear infinite;
+          filter: blur(0px);
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        @keyframes breathe {
+          0%   { transform: scale(1); }
+          50%  { transform: scale(1.08); }
+          100% { transform: scale(1); }
+        }
+
+        @media (max-width: 640px) {
+          .fog { width: 200px; height: 200px; filter: blur(32px); }
+        }
+      `}</style>
+    </div>
+  );
 }
