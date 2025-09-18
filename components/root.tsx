@@ -97,7 +97,7 @@ export function Smoke() {
           width: 360px;
           height: 360px;
           filter: blur(100px);
-          opacity: 0.40;
+          opacity: 0.25;
           animation: breathe 6s ease-in-out infinite;
         }
 
@@ -107,12 +107,12 @@ export function Smoke() {
           inset: -30%;
           border-radius: 9999px;
           background: conic-gradient(
-            from 0deg at 50% 50%,
-            rgba(0, 86, 255, 0.85) 0deg,
-            rgba(0, 86, 255, 0.12) 90deg,
-            rgba(0, 86, 255, 0.85) 180deg,
-            rgba(0, 86, 255, 0.12) 270deg,
-            rgba(0, 86, 255, 0.85) 360deg
+            from 0deg at 100% 100%,
+            rgba(0, 0, 0, 0.85) 0deg,
+            rgba(0, 0, 0, 0.12) 90deg,
+            rgba(0, 0, 0, 0.85) 180deg,
+            rgba(0, 0, 0, 0.12) 270deg,
+            rgba(0, 0, 0, 0.85) 360deg
           );
           animation: spin 16s linear infinite;
           filter: blur(0px);
